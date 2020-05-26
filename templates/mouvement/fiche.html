@@ -1,0 +1,63 @@
+{% extends 'base/base.html' %}
+{% block title %}Poyosei|Fiche mouvement{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% block subtitle%}
+        <h1>Fiche du mouvement n° {{ instance.id }} <p> pacage cedant: {{ instance.pacage_cedant }}</p> <p> pacage repreneur: {{ instance.pacage_repreneur }}</p></h1>
+{% endblock %}
+{% block content %}
+<div class="container">
+<form method="post" novalidate>
+  {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                                <ul class="nav nav-tabs">
+                                   <li class="active"><a href="#tab1default" data-toggle="tab">Obligatoires</a></li>
+                                    <li><a href="#tab2default" data-toggle="tab">Références</a></li>
+                                    <li><a href="#tab3default" data-toggle="tab">Informations</a></li>
+                                    <!-- <li><a href="#tab5default" data-toggle="tab">Default 5</a></li> -->
+                                </ul>
+                        </div>
+                        <fieldset disabled="disabled">
+                        <div class="panel-body">
+                          <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default" title="{{ form.type_mouvement.help_text }}">
+                              <!-- <fieldset disabled="disabled"> -->
+                                <table class="table table-striped">
+                                    <tr title="{{ form.type_mouvement.help_text }}"><th>{{ form.type_mouvement.label_tag }}</th><td>{{ form.type_mouvement }}</td><td colspan="2">{{ form.type_mouvement.errors }}</td></tr>
+                                    <tr title="{{ form.pacage_cedant.help_text }}"><th>{{ form.pacage_cedant.label_tag }}</th><td>{{ form.pacage_cedant }}</td><td>{{ form.pacage_cedant.errors }}</td><td><a href="{% url 'poyosei:planteurFiche' instance.pacage_cedant %}" target="_blank">Voir Fiche Planteur</a></td></tr>
+                                    <tr title="{{ form.pacage_repreneur.help_text }}"><th>{{ form.pacage_repreneur.label_tag }}</th><td>{{ form.pacage_repreneur }}</td><td>{{ form.pacage_repreneur.errors }}</td><td><a href="{% url 'poyosei:planteurFiche' instance.pacage_repreneur %}" target="_blank">Voir Fiche Planteur</a></td></tr>
+                                    <tr title="{{ form.année_concerne.help_text }}"><th>{{ form.année_concerne.label_tag }}</th><td>{{ form.année_concerne }}</td><td colspan="2">{{ form.année_concerne.errors }}</td></tr>
+                                    <tr title="{{ form.date_demande.help_text }}"><th>{{ form.date_demande.label_tag }}</th><td>{{ form.date_demande }}</td><td colspan="2">{{ form.date_demande.errors }}</td></tr>
+                                    <tr title="{{ form.mouvement_valide.help_text }}"><th>{{ form.mouvement_valide.label_tag }}</th><td>{{ form.mouvement_valide }}</td><td colspan="2">{{ form.mouvement_valide.errors }}</td></tr>
+                                    <tr title="{{ form.quantite_reference_individuelle_accorde.help_text }}"><th>{{ form.quantite_reference_individuelle_accorde.label_tag }}</th><td colspan="2">{{ form.quantite_reference_individuelle_accorde }}</td><td>{{ form.quantite_reference_individuelle_accorde.errors }}</td></tr>
+                                    <tr title="{{ form.taxe.help_text }}"><th>{{ form.taxe.label_tag }}</th><td>{{ form.taxe }}</td><td colspan="2">{{ form.taxe.errors }}</td></tr>
+                                </table>
+
+                            </div>
+                            <div class="tab-pane fade" id="tab2default">
+
+                              <table class="table table-striped">
+                                  <tr title="{{ form.type_reference_individuelle_modifie.help_text }}"><th>{{ form.type_reference_individuelle_modifie.label_tag }}</th><td>{{ form.type_reference_individuelle_modifie }}</td><td>{{ form.type_reference_individuelle_modifie.errors }}</td></tr>
+                                  <tr title="{{ form.quantite_reference_individuelle_demande.help_text }}"><th>{{ form.quantite_reference_individuelle_demande.label_tag }}</th><td>{{ form.quantite_reference_individuelle_demande }}</td><td>{{ form.quantite_reference_individuelle_demande.errors }}</td></tr>
+                              </table>
+                            </div>
+                            <div class="tab-pane fade" id="tab3default">
+
+                              <table class="table table-striped">
+                                <tr title="{{ form.informations.help_text }}"><th>{{ form.informations.label_tag }}</th><td>{{ form.informations }}</td><td>{{ form.informations.errors}}</td></tr>
+                                <tr title="{{ form.date_COSDA_Valide.help_text }}"><th>{{ form.date_COSDA_Valide.label_tag }}</th><td>{{ form.date_COSDA_Valide }}</td><td>{{ form.date_COSDA_Valide.errors }}</td></tr>
+                              </table>
+                            </div>
+                         </div>
+                       </div>
+                </div>
+          </div>
+        </div>
+        <a href="{% url 'poyosei:mouvementListe' %}" type="button" class="btn btn-default">Retour</a>
+      </fieldset>
+</form>
+</div>
+{% endblock %}

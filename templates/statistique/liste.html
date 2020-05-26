@@ -1,0 +1,97 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{% block title %}Poyosei|Tableau Production Commerciale{% endblock %}
+
+{% block javascript %}
+
+<script>
+function searchTable() {
+    var input, filter, found, table, tr, td, i, j;
+    input = document.getElementById("searchStats");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("statsTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+</script>
+{% endblock %}
+{% block subtitle %}
+<h1>Accueil Statistique</h1>
+{% endblock %}
+{% block content %}
+<div class="full-windth" align='middle'>
+    <div class='margin-constraint'>
+        </span></a><input type="text" align="center" id="searchStats" onkeyup="searchTable()" placeholder="Chercher une production commerciale" class="form-control">   
+        <BR />
+        {% csrf_token %}
+        <table class="table table-striped table-hover" id="statsTable">
+            <thead>
+                <tr vertical-align='middle' class="info">
+                    <th scope="row" class="text-capitalize">pacage</th>
+                    <th scope="row" class="text-right text-capitalize">année</th>
+                    <th scope="row" class="text-right text-capitalize">surface_banane</th>
+                    <th scope="row" class="text-right text-capitalize">surface_jachere</th>
+                    <th scope="row" class="text-right text-capitalize">rendement</th>
+                    <th scope="row" class="text-right text-capitalize">production_exporte</th>
+                    <th scope="row" class="text-right text-capitalize">production_local</th>
+                    <th scope="row"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stats in statistiques %}
+                <tr>
+                    <td><a href="{% url 'poyosei:planteurFiche' stats.pacage %}">{{ stats.pacage }}</a></td>
+                    <td class="text-right">{{ stats.annee }}</td>
+                    <td class="text-right">{{ stats.surface_banane|intcomma }}</a></td>
+                    <td class="text-right">{{ stats.surface_jachere|intcomma }}</a></td>
+                    <td class="text-right">{{ stats.rendement|intcomma }}</a></td>
+                    <td class="text-right">{{ stats.production_exporte|intcomma }}</a></td>
+                    <td class="text-right">{{ stats.production_locale|intcomma }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<style type="text/css">
+    .margin-constraint{
+    /*On indique tout simplement une marge*/
+    margin-left: 20%;
+    margin-right: 20%;
+    }
+    
+    .useful-width{
+    /*On règle ensuite la largeur utile puis on centre*/
+    max-width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    
+    
+    *{
+    margin:0;
+    padding:0;
+    }
+    
+    footer{
+    position:relative;
+    bottom:0;
+    left: 0px;
+    }
+    
+    </style>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'base/base.html' %}
+{% load static %} 
+{% load humanize %} 
+{% block title %}Poyosei|Modification d'un planteur{%endblock%} 
+{% block javascript %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}" />
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+ {% endblock %} 
+ {% block subtitle%}
+ <h1>Edition des statistiques du planteur pacage n°: {{ instance.pacage }}</h1>
+ {% endblock %}
+ {% block content %}
+ <div class="container">
+     <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="container">
+                <div class="row">
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tab1default" data-toggle="tab">Informations statistiques</a>
+                                </li>
+                                <li class="navbar-right">
+                                    <a href="{% url 'poyosei:planteurFiche' instance.pacage %}" class="" title="Edition">Visualiser
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <fieldset disabled="disabled">
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1default" title="">
+                                    <table class="table table-striped">
+                                        <tr title="">
+                                            <th>{{ form.pacage.label_tag }}</th>
+                                            <td>{{ form.pacage }}</td>
+                                            <td>{{ form.pacage.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.annee.label_tag }}</th>
+                                            <td>{{ form.annee }}</td>
+                                            <td>{{ form.annee.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.surface_banane.label_tag }}</th>
+                                            <td>{{ form.surface_banane }}</td>
+                                            <td>{{ form.surface_banane.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.surface_jachere.label_tag }}</th>
+                                            <td>{{ form.surface_jachere }}</td>
+                                            <td>{{ form.surface_jachere.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.surface_autre.label_tag }}</th>
+                                            <td>{{ form.surface_autre }}</td>
+                                            <td>{{ form.surface_autre.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.surface_totale_utile.label_tag }}</th>
+                                            <td>{{ form.surface_totale_utile }}</td>
+                                            <td>{{ form.surface_totale_utile.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.surface_totale_exploitation.label_tag }}</th>
+                                            <td>{{ form.surface_totale_exploitation }}</td>
+                                            <td>{{ form.surface_totale_exploitation.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.rendement.label_tag }}</th>
+                                            <td>{{ form.rendement }}</td>
+                                            <td>{{ form.rendement.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.production_exporte.label_tag }}</th>
+                                            <td>{{ form.production_exporte }}</td>
+                                            <td>{{ form.production_exporte.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.production_locale.label_tag }}</th>
+                                            <td>{{ form.production_locale }}</td>
+                                            <td>{{ form.production_locale.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.information_diverse.label_tag }}</th>
+                                            <td>{{ form.information_diverse }}</td>
+                                            <td>{{ form.information_diverse.errors }}</td>
+                                        </tr>
+                                        <tr title="">
+                                            <th>{{ form.surface_propriete.label_tag }}</th>
+                                            <td>{{ form.surface_propriete }}</td>
+                                            <td>{{ form.surface_propriete.errors }}</td>
+                                        </tr>  
+                                        <tr title="">
+                                            <th>{{ form.surface_location.label_tag }}</th>
+                                            <td>{{ form.surface_location }}</td>
+                                            <td>{{ form.surface_location.errors }}</td>
+                                        </tr>  
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <a href="{% url 'poyosei:planteurListe' %}" type="button" class="btn btn-default">Retour</a>           
+            <fieldset disabled="disabled">    
+    </form>
+ </div>
+ <style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    left: 0px;
+}
+</style>
+{% endblock %}

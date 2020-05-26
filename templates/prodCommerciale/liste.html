@@ -1,0 +1,125 @@
+{% extends 'base/base.html' %} 
+{% load humanize %}
+ {% block title %}Poyosei|Tableau Production Commerciale{% endblock %}
+{% block javascript %}
+<script>
+    function searchTable() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchProd");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("prodTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+</script> {% endblock %} {% block subtitle%}
+<h1>Accueil Production Commerciale</h1>
+{% endblock %} {% block content %}
+<div class="full-windth" align='middle'>
+    <div class='margin-constraint'>
+        </span>
+        </a>
+        <input type="text" align="center" id="searchProd" onkeyup="searchTable()" placeholder="Chercher une production commerciale"
+            class="form-control">
+        <BR /> {% csrf_token %}
+        <table class="table table-striped table-hover" id="prodTable">
+            <thead>
+                <tr class="info">
+                    <th scope="row" class="text-capitalize">pacage</th>
+                    <th vertical-align=middle scope="row" class="text-capitalize">année</th>
+                    <th scope="row" class="text-right" class="text-capitalize">production_commerciale</th>
+                    <th scope="row"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prod in prodCommerciale %}
+                <tr>
+                    <td>
+                        <a href="{% url 'poyosei:planteurFiche' prod.pacage %}">{{ prod.pacage }}</a>
+                    </td>
+                    <td>{{ prod.année }}</td>
+                    <td class="text-right">{{ prod.production_commerciale|intcomma }}</a>
+                    </td>
+                    <td align="right">
+                        <div class="btn-group">
+                            <a href="{% url 'poyosei:prodCommercialeEditer' prod.pacage prod.année %}" class="btn btn-default">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                            </a>
+                            <a href="{% url 'poyosei:prodCommercialeFiche' prod.pacage prod.année %}" class="btn btn-default">
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            </a>
+                            <a href="" data-pacage="{{ prod.pacage }}" data-année="{{ prod.année }}" data-href="{% url 'poyosei:prodCommercialeSupprimer' prod.pacage prod.année %}"
+                                data-toggle="modal" data-target="#confirm-delete" class="btn btn-default">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1>Suppression de la production commerciale</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p id="t">pacage</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">annuler</button>
+                        <a class="btn btn-danger btn-ok">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#confirm-delete').on('show.bs.modal', function (e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            id = $(e.relatedTarget).data('id');
+            pacage = $(e.relatedTarget).data('pacage');
+            année = $(e.relatedTarget).data('année');
+            $("#t").text("Supprimer la production commerciale du pacage n°" + pacage + " pour l'année : " + année + "?");
+        });
+    </script>
+    <style type="text/css">
+        .margin-constraint {
+            /*On indique tout simplement une marge*/
+            margin-left: 20%;
+            margin-right: 20%;
+        }
+
+        .useful-width {
+            /*On règle ensuite la largeur utile puis on centre*/
+            max-width: 20%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
+            left: 0px;
+        }
+    </style>
+    {% endblock %}

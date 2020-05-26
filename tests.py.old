@@ -1,0 +1,141 @@
+import sys, os
+from django.test import TestCase
+from django.core.urlresolvers import reverse
+from poyosei.models import *
+from poyosei.views import *
+from django.db.models.query import QuerySet
+from datetime import datetime
+from django.shortcuts import get_object_or_404
+# Create your tests here.
+
+#TEST INDEX PAGES
+class indexTest(TestCase):
+
+  def test_index(self):
+
+    response = self.client.get(reverse('poyosei:index'))
+    self.failUnless(isinstance(response.context['planteurs'], QuerySet))
+    self.assertTemplateUsed(response, 'index.html')
+    self.failUnlessEqual(response.status_code, 200)
+
+  def test_index_Planteur(self):
+      """
+      Affichage de la page d'accueil : liste des articles.
+      """
+      response = self.client.get(reverse('poyosei:planteurListe'))
+      self.failUnless(isinstance(response.context['planteurs'], QuerySet))
+      self.assertTemplateUsed(response, 'planteur/liste.html')
+      self.failUnlessEqual(response.status_code, 200)
+
+  def test_index_Mouvement(self):
+
+      response = self.client.get(reverse('poyosei:mouvementListe'))
+      self.failUnless(isinstance(response.context['mouvements'], QuerySet))
+      self.assertTemplateUsed(response, 'mouvement/liste.html')
+      self.failUnlessEqual(response.status_code, 200)
+
+
+#TEST des functions(unitaire):
+class planteurTest(TestCase):
+    def createPlanteur(self, pacage=951863247, nom="test", prenom="Testing"):
+        return Planteur.objects.create(pacage=pacage, nom=nom, prenom=prenom)
+    def testPlanteurs(self):
+        planteur = self.createPlanteur()
+        self.assertTrue(isinstance(planteur, Planteur))
+
+
+class operationTest(TestCase):
+  def clotureCampagne(self):
+      return Mouvement.objects.filter(mouvement_valide=False)
+  def testCloture(self):
+      cloture = self.clotureCampagne()
+      self.assertFalse(cloture)
+  def calculCampagne(self, pacagea=123456789, pacageb=987456123, reserve=2):
+      return '{} {}'.format(self.Planteur.objects.filter(pacage=pacagea), self.Planteur.objects.filter(pacage=pacageb))
+  def calculTest(self):
+      clc = self.calculCampagne()
+      self.assertTrue(clc)
+
+
+
+
+
+
+
+class mouvementTest(TestCase):
+  def setUp(self):
+    Planteur.objects.create(pacage=831279456, nom='planteurA', prenom='TestA')
+    Planteur.objects.create(pacage=246831759, nom='planteurB', prenom='TestB')
+    Planteur.objects.create(pacage=000000000, nom='planteurC', prenom='TestC')
+    Campagne.objects.create(pacage=831279456, rid=100, annee=2013)
+    Campagne.objects.create(pacage=246831759, rid=50 , annee=2013)
+    Campagne.objects.create(pacage=000000000, rid=45 , annee=2013)
+    Campagne.objects.create(pacage=831279456, rid=100, annee=2014)
+    Campagne.objects.create(pacage=246831759, rid=50 , annee=2014)
+    Campagne.objects.create(pacage=000000000, rid=45 , annee=2014)
+    Campagne.objects.create(pacage=831279456, rid=100, annee=2015)
+    Campagne.objects.create(pacage=246831759, rid=50 , annee=2015)
+    Campagne.objects.create(pacage=000000000, rid=45 , annee=2015)
+    Campagne.objects.create(pacage=831279456, rid=100, annee=2012)
+    Campagne.objects.create(pacage=246831759, rid=50 , annee=2012)
+    Campagne.objects.create(pacage=000000000, rid=45 , annee=2012)
+    Mouvement.objects.create( type_mouvement='Transfert de Référence Individuelle sans foncier', pacage_cedant=831279456, pacage_repreneur=246831759, année_concerne=datetime.now().year, date_demande=datetime.now(), mouvement_valide=True, date_COSDA_Valide=datetime.now(), quantite_reference_individuelle_accorde=30, taxe=15)
+    
+  def test_Mouvement(self):
+      mvt = Mouvement.objects.get(pacage_cedant=831279456)
+      ceder = mvt.ridCedant
+      obtenue = mvt.ridRepreneur
+      taxe = mvt.ridReserve
+
+      self.assertEqual(ceder, -30)
+      self.assertEqual(obtenue, 25.5)
+      self.assertEqual(taxe, 4.5)
+  
+
+class CampagneTest(TestCase):
+  def setUp(self):
+    Planteur.objects.create(pacage='831279456', nom='planteurA', prenom='TestA')
+    Planteur.objects.create(pacage='246831759', nom='planteurB', prenom='TestB')
+    Planteur.objects.create(pacage='000000000', nom='planteurR', prenom='TestR')
+    Campagne.objects.create(pacage='831279456', rid=100, annee=2013)
+    Campagne.objects.create(pacage='246831759', rid=50 , annee=2013)
+    Campagne.objects.create(pacage='000000000', rid=45 , annee=2013)
+    Campagne.objects.create(pacage='831279456', rid=100, annee=2014)
+    Campagne.objects.create(pacage='246831759', rid=50 , annee=2014)
+    Campagne.objects.create(pacage='000000000', rid=45 , annee=2014)
+    Campagne.objects.create(pacage='831279456', rid=100, annee=2015)
+    Campagne.objects.create(pacage='246831759', rid=50 , annee=2015)
+    Campagne.objects.create(pacage='000000000', rid=45 , annee=2015)
+    Campagne.objects.create(pacage='831279456', rid=100, annee=2012)
+    Campagne.objects.create(pacage='246831759', rid=50 , annee=2012)
+    Campagne.objects.create(pacage='000000000', rid=45 , annee=2012)
+    Mouvement.objects.create( type_mouvement='Transfert de Référence Individuelle sans foncier', pacage_cedant=831279456, pacage_repreneur=246831759, année_concerne=datetime.now().year, date_demande=datetime.now(), mouvement_valide=True, date_COSDA_Valide=datetime.now(), quantite_reference_individuelle_accorde=30, taxe=15)
+    Mouvement.objects.create( type_mouvement='Transfert de Référence Individuelle sans foncier', pacage_cedant=246831759, pacage_repreneur=831279456, année_concerne=datetime.now().year, date_demande=datetime.now(), mouvement_valide=True, date_COSDA_Valide=datetime.now(), quantite_reference_individuelle_accorde=30, taxe=15)
+  
+  def test_planteur_rid(self):
+    PlanteurA = Planteur.objects.get(pacage='831279456')
+    PlanteurB = Planteur.objects.get(pacage='246831759')
+    PlanteurR = Planteur.objects.get(pacage='000000000')
+    ridB = PlanteurB.rid
+    ridA = PlanteurA.rid_donner
+    ridR = PlanteurR.ridTest
+  
+
+    self.assertEqual(ridB, 75.5)
+    self.assertEqual(ridA, 70)
+    self.assertEqual(ridR, 70.5)
+    
+  
+  def test_derniere_campagne(self):
+    PlanteurB = Planteur.objects.get(pacage=831279456)
+    annee = PlanteurB.annee
+    self.assertEqual(annee, 2015)
+
+   
+
+
+
+
+
+    
+    

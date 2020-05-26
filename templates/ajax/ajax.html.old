@@ -1,0 +1,1 @@
+{% if planteurs %}{% for planteur in planteurs %}<p>"Pacage:{{ planteur.pacage }} Nom: {{ planteur.nom }} Prenom: {{ planteur.prenom }}"></p>{% endfor %}{% else %}<p>Auncun planteur ne correspond au pacage renseigner. Veuillez rentrer un pacage valide</p>{% endif %}

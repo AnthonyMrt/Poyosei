@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Poyosei|Tableau Hitorique{% endblock %}
+
+{% block javascript %}
+
+<script>
+    function searchTable() {
+        var input, filter, found, table, tr, td, i, j;
+        input = document.getElementById("searchHistorique");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("historique");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tr[i].style.display = "";
+                found = false;
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+    </script>
+    {% endblock %}
+    {% block content %}
+    <div class="page-header" align='middle'>
+        <h1>Accueil Historique des mouvements</h1>
+    </div>
+
+    <div class="full-windth" align='middle'>
+        <div class='margin-constraint'>
+        </span></a><input type="text" align="middle" id="searchHistorique" onkeyup="searchTable()" placeholder="Rechercher dans l'historique" class="form-control">
+        </div>
+        </div>
+        <div class='container'>
+          <BR />
+              {% csrf_token %}
+              <table class="table table-striped" id="historique">
+                    <thead>
+                        <tr class="info">
+                            <th scope="row">id</th>
+                            <th scope="row">Date</th>
+                            <th scope="row">Action</th>
+                            <th scope="row">Test</th>
+                            <th scope="row">Utilisateur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in historique %}
+                        <tr>
+                            <td>{{ h.history_object }}</td>
+                            <td>{{ h.history_date }}</td>
+                            <td>{{ h.get_history_type_display }}</td>
+                            <td>{{ h.get_history_action }}</td>
+                            <td>{{ h.history_user }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+         <script>     
+        </script>
+        <style type="text/css">
+        .margin-constraint{
+            /*On indique tout simplement une marge*/
+            margin-left: 700px;
+            margin-right: 700px;
+        }
+
+        .useful-width{
+            /*On règle ensuite la largeur utile puis on centre*/
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+
+        {% endblock %}

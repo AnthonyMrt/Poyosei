@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{% block title %}Poyosei{% endblock %}
+
+{% block subtitle %}<h1 class='text-center'>Bienvenue sur Poyosei <br /> L'application de gestion des planteurs de bananes de Guadeloupe</h1>
+{% endblock %}
+{% block content %}
+<div class="container">
+ <div class="row">
+    <div class="col-xs-6 col-lg-6">
+      <h2 class='text-info'>Planteurs</h2>
+      <p>Il y a actuellement {{ planteurs|length }} planteurs enregistrés.</p>
+    </br></br></br>
+      <p><a class="btn btn-default" href="{% url 'poyosei:planteurListe' %}" role="button">En savoir plus »</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+    <div class="col-xs-6 col-lg-6">
+        <h2 class='text-info'>Mouvement</h2>
+        <p>{{ mouvements|length }} mouvement mis en place</p>
+        <p>Pour cette campagne {{ total|intcomma }} tonnes ont été échangés</p>
+        <p>la moyenne des références individuelle échangé est de: {{ moyenne|intcomma }} tonnes </p>
+        <p><a class="btn btn-default" href="{% url 'poyosei:mouvementListe' %}" role="button">En savoir plus »</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+    <div class="col-xs-6 col-lg-6">
+        <h2 class='text-info'>Campagne</h2>
+        <p>La dernière campagne cloturée est celle de {{ Cannee }}</p>
+        <p></p>
+        <p><a class="btn btn-default" href="{% url 'poyosei:campagneListe' %}" role="button">En savoir plus »</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+    <div class="col-xs-6 col-lg-6">
+      <h2 class='text-info'>Statistiques</h2>
+      <p>Consulter les statistiques des planteurs</p>
+      <p></p>
+      <p><a class="btn btn-default" href="{% url 'poyosei:statsListe' %}" role="button">En savoir plus »</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+    <div class="col-xs-6 col-lg-6">
+      <h2 class='text-info'>Production commerciale</h2>
+      <p>Consulter les production commerciale des planteurs</p>
+      <p></p>
+      <p><a class="btn btn-default" href="{% url 'poyosei:prodCommercialeListe' %}" role="button">En savoir plus »</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+    <div class="col-xs-6 col-lg-6">
+      <h2 class='text-info'>Rapport</h2>
+      <p>Accéder aux rapport de l'application poyosei</p>
+      <p></p>
+      <p><a class="btn btn-default" href="{% url 'poyosei:prodCommercialeListe' %}" role="button">En savoir plus »</a></p>
+    </div><!--/.col-xs-6.col-lg-4-->
+  </div>
+</div>
+{% endblock %}

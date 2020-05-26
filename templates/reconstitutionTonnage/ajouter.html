@@ -1,0 +1,67 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block title %}Poyosei|creation Tonnage{% endblock %}
+
+{% block javascript %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header" align='middle'>
+        <h1>Ajout d'une reconstitution de tonnage</h1>
+    </div>
+<div class="container">
+    <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <div class="panel with-nav-tabs panel-default">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1default" data-toggle="tab">Informations</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab1default" title="">
+                        <table class="table table-striped">
+                            <tr title="{{ form.pacage.help_text }}"><th>{{ form.pacage.label_tag }}</th><td>{{ form.pacage }}</td><td>{{ form.pacage.errors }}</td></tr>
+                            <tr title="{{ form.annee.help_text }}"><th>{{ form.annee.label_tag }}</th><td>{{ form.annee }}</td><td>{{ form.annee.errors }}</td></tr>
+                            <tr title="{{ form.reconstitution_tonnage.help_text }}"><th>{{ form.reconstitution_tonnage.label_tag }}</th><td>{{ form.reconstitution_tonnage }}</td><td>{{ form.reconstitution_tonnage.errors }}</td></tr>
+                            <tr title="{{ form.justification.help_text }}"><th>{{ form.justification.label_tag }}</th><td>{{ form.justification }}</td><td>{{ form.justification.errors }}</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<button type="submit">Valider</button>
+</form>
+</div>
+<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+
+		footer{
+			position:relative;
+			bottom:0;
+			left: 0px;
+		}
+
+</style>
+{% endblock %}

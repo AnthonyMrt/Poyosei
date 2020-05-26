@@ -1,0 +1,127 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block title %}Poyosei|creation planteur{% endblock %}
+
+{% block javascript %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="page-header" align='middle'>
+        <h1>Création d'un Planteur</h1>
+    </div>
+<div class="container">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+<form method="post" novalidate>
+{% csrf_token %}
+        <div class="container">
+            <div class="row">
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab1default" data-toggle="tab">Obligatoire</a></li>
+                                    <li><a href="#tab2default" data-toggle="tab">Références</a></li>
+                                    <li><a href="#tab3default" data-toggle="tab">Informations</a></li>
+                                    <!-- <li><a href="#tab4default" data-toggle="tab">Divers</a></li> -->
+                                    <!-- <li><a href="#tab5default" data-toggle="tab">Default 5</a></li> -->
+                                </ul>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1default" title="{{ form.pacage.help_text }}">
+                                    <!-- <fieldset disabled="disabled"> -->
+                                        <table class="table table-striped">
+                                            <tr title="{{ form.pacage.help_text }}"><th>{{ form.pacage.label_tag }}</th><td>{{ form.pacage }}</td><td>{{ form.pacage.errors }}</td></tr>
+                                            <tr title="{{ form.civilite.help_text }}"><th>{{ form.civilite.label_tag }}</th><td>{{ form.civilite }}</td><td>{{ form.civilite.errors }}</td></tr>
+                                            <tr title="{{ form.nom.help_text }}"><th>{{ form.nom.label_tag }}</th><td>{{ form.nom }}</td><td>{{ form.nom.errors }}</td></tr>
+                                            <tr title="{{ form.prenom.help_text }}"><th>{{ form.prenom.label_tag }}</th><td>{{ form.prenom }}</td><td>{{ form.prenom.errors }}</td></tr>
+                                        </table>
+                                    <!-- </fieldset> -->
+                                </div>
+                                <div class="tab-pane fade" id="tab2default" title="{{ form.nom.help_text }}">
+                                    <!-- <fieldset disabled="disabled"> -->
+                                        <table class="table table-striped">
+                                          <tr title="{{ form.siret.help_text }}"><th>{{ form.siret.label_tag }}</th><td>{{ form.siret }}</td><td>{{ form.siret.errors }}</td></tr>
+                                          <tr title="{{ form.LPG.help_text }}"><th>{{ form.LPG.label_tag }}</th><td>{{ form.LPG }}</td><td>{{ form.LPG.errors }}</td></tr>
+                                          <tr title="{{ form.contre_marque.help_text }}"><th>{{ form.contre_marque.label_tag }}</th><td>{{ form.contre_marque }}</td><td>{{ form.contre_marque.errors }}</td></tr>                                          
+                                          <tr title="{{ form.numero_exemption_Diecte.help_text }}"><th>{{ form.numero_exemption_Diecte.label_tag }}</th><td>{{ form.numero_exemption_Diecte }}</td><td>{{ form.numero_exemption_Diecte.errors }}</td></tr>
+                                          <tr title="{{ form.référence_individuelle_définitive.help_text }}"><th>{{ form.référence_individuelle_définitive.label_tag }}</th><td>{{ form.référence_individuelle_définitive }}</td><td>{{ form.référence_individuelle_définitive.errors }}</td></tr>
+                                          <tr title="{{ form.production_commerciale_totale.help_text }}"><th>{{ form.production_commerciale_totale.label_tag }}</th><td>{{ form.production_commerciale_totale }}</td><td>{{ form.production_commerciale_totale.errors }}</td></tr>
+                                        </table>
+                                    <!-- </fieldset> -->
+                                </div>
+                                <div class="tab-pane fade" id="tab3default">
+                                    <!-- <fieldset disabled="disabled"> -->
+                                        <table class="table table-striped">
+                                          <tr title="{{ form.denomination.help_text }}"><th>{{ form.denomination.label_tag }}</th><td>{{ form.denomination }}</td><td>{{ form.denomination.errors }}</td></tr>
+                                          <tr title="{{ form.gerant.help_text }}"><th>{{ form.gerant.label_tag }}</th><td>{{ form.gerant }}</td><td>{{ form.gerant.errors }}</td></tr>
+                                          <tr title="{{ form.adresse.help_text }}"><th>{{ form.adresse.label_tag }}</th><td>{{ form.adresse }}</td><td>{{ form.adresse.errors }}</td></tr>
+                                          <tr title="{{ form.adresse_complementaire.help_text }}"><th>{{ form.adresse_complementaire.label_tag }}</th><td>{{ form.adresse_complementaire }}</td><td>{{ form.adresse_complementaire.errors }}</td></tr>
+                                          <tr title="{{ form.code_postal.help_text }}"><th>{{ form.code_postal.label_tag }}</th><td>{{ form.code_postal }}</td><td>{{ form.code_postal.errors }}</td></tr>
+                                          <tr title="{{ form.commune.help_text }}"><th>{{ form.commune.label_tag }}</th><td>{{ form.commune }}</td><td>{{ form.commune.errors }}</td></tr>
+                                          <tr title="{{ form.telephone_principale.help_text }}"><th>{{ form.telephone_principale.label_tag }}</th><td>{{ form.telephone_principale }}</td><td>{{ form.telephone_principale.errors }}</td></tr>
+                                          <tr title="{{ form.telephone_secondaire.help_text }}"><th>{{ form.telephone_secondaire.label_tag }}</th><td>{{ form.telephone_secondaire }}</td><td>{{ form.telephone_secondaire.errors }}</td></tr>
+                                          <tr title="{{ form.courriel.help_text }}"><th>{{ form.courriel.label_tag }}</th><td>{{ form.courriel }}</td><td>{{ form.courriel.errors }}</td></tr>
+                                          <tr title="{{ form.dateNaissance.help_text }}"><th>{{ form.dateNaissance.label_tag }}</th><td>{{ form.dateNaissance }}</td><td>{{ form.dateNaissance.errors }}</td></tr>
+                                          <tr title="{{ form.date_adhesion.help_text }}"><th>{{ form.date_adhesion.label_tag }}</th><td>{{ form.date_adhesion }}</td><td>{{ form.date_adhesion.errors }}</td></tr>
+                                          <tr title="{{ form.numero_exemption_Diecte.help_text }}"><th>{{ form.numero_exemption_Diecte.label_tag }}</th><td>{{ form.numero_exemption_Diecte }}</td><td>{{ form.numero_exemption_Diecte.errors }}</td></tr>
+                                          <tr title="{{ form.date_fin_Diecte.help_text }}"><th>{{ form.date_fin_Diecte.label_tag }}</th><td>{{ form.date_fin_Diecte }}</td><td>{{ form.date_fin_Diecte.errors }}</td></tr>
+                                          <tr title="{{ form.controle.help_text }}"><th>{{ form.controle.label_tag }}</th><td>{{ form.controle }}</td><td>{{ form.controle.errors }}</td></tr>
+                                          <tr title="{{ form.date_cessation_Activite.help_text }}"><th>{{ form.date_cessation_Activite.label_tag }}</th><td>{{ form.date_cessation_Activite }}</td><td>{{ form.date_cessation_Activite.errors }}</td></tr>
+                                          <tr title="{{ form.entreprise_associé.help_text }}"><th>{{ form.entreprise_associé.label_tag }}</th><td>{{ form.entreprise_associé }}</td><td>{{ form.entreprise_associé.errors }}</td></tr>
+                                          <tr title="{{ form.commentaire.help_text }}"><th>{{ form.commentaire.label_tag }}</th><td>{{ form.commentaire }}</td><td>{{ form.commentaire.errors }}</td></tr>
+                                        </table>
+                                    <!-- </fieldset> -->
+                                </div>
+                                <!-- <div class="tab-pane fade" id="tab4default" title="{{ form.prenom.help_text }}"> -->
+                                    <!-- Default 4 -->
+                                <!-- </div> -->
+                                <!-- <div class="tab-pane fade" id="tab5default"> -->
+                                    <!-- Default 5 -->
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    <!-- <fieldset disabled="disabled"> -->
+        <button type="submit">Valider</button>
+    <!-- </fieldset> -->
+</form>
+</div>
+
+<br />
+<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+
+		footer{
+			position:relative;
+			bottom:0;
+			left: 0px;
+		}
+
+		</style>
+{% endblock %}

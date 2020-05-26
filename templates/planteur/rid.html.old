@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Poyosei|Tableau Planteurs{% endblock %}
+
+{% block javascript %}
+
+</script>
+{% endblock %}
+{% block subtitle%}
+        <h1>Accueil Planteur</h1>
+{% endblock %}
+{% block content %}
+
+    {{ test }}
+
+{% endblock %}
+

@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{% block title %}Poyosei|Rapport{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+
+{% block subtitle%}
+    <h1>Accueil Rapport</h1>
+{% endblock %}
+{% block content %}
+
+<div class="full-windth" align='middle'>
+    <div class='margin-constraint'>
+        <h3>Bienvenue sur la page des rapport de Poyosei</h3> 
+        <h4>Ici vous pouvez accéder à différents rapport de type CSV sur les planteurs et les campagnes</h4></br></br></br>
+        <a href="{% url 'poyosei:planteurExport' %}" class="btn btn-default" type="button" data-toggle='tooltip' title="Exporter l'historique des campagnes">Rapport sur les campagnes</a> </br></br>
+        <a href="{% url 'poyosei:mouvementExport' %}" class="btn btn-default" type="button" data-toggle='tooltip' title="Exporter l'historique desmouvements">Rapport sur les mouvements</a> </br></br>
+        <a href="{% url 'poyosei:rapportODEADOM' %}" class="btn btn-default" type="button" data-toggle='tooltip' title="Rapport destiné à l'ODEADOM">Rapport globable pour l'ODEADOM</a> </br></br>      
+        <a href="{% url 'poyosei:rapportODEADOMAnneeEnCours' %}" class="btn btn-default" type="button" data-toggle='tooltip' title="Rapport destiné à l'ODEADOM">Rapport annuel pour l'ODEADOM</a> </br></br>        
+    </div>
+</div>
+</script>
+<style type="text/css">
+.margin-constraint{
+/*On indique tout simplement une marge*/
+margin-left: 30%;
+margin-right: 30%;
+}
+
+.useful-width{
+/*On règle ensuite la largeur utile puis on centre*/
+max-width: 30%;
+margin-left: auto;
+margin-right: auto;
+}
+
+
+*{
+margin:0;
+padding:0;
+}
+
+footer{
+position:relative;
+bottom:0;
+left: 0px;
+}
+
+</style>
+{% endblock %}

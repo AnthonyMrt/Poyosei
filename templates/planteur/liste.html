@@ -1,0 +1,119 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{% block title %}Poyosei|Tableau Planteurs{% endblock %}
+
+{% block javascript %}
+
+<script>
+function searchTable() {
+    var input, filter, found, table, tr, td, i, j;
+    input = document.getElementById("searchPlanteur");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("planteur");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+
+</script>
+{% endblock %}
+{% block subtitle%}
+        <h1>Accueil Planteur</h1>
+{% endblock %}
+{% block content %}
+
+
+<div class="container">
+<input type="text" align="middle" id="searchPlanteur" onkeyup="searchTable()" placeholder="Entrer le pacage du planteur a filtrer" class="form-control">
+<BR />
+    {% csrf_token %}
+    <table class="table table-striped table-hover" id="planteur">
+        <thead>
+            <tr class="info">
+                <th scope="row">Pacage</th>
+                <th scope="row">Nom</th>
+                <th scope="row">Prenom</th>
+                <th scope="row" class="text-right" data-toggle="tooltip on top" title="Référence individuelle définitive en cours">RID en cours</th>
+                <th scope="row" class="text-right" data-toggle="tooltip on top" title="Référence individuelle temporaire en cours">RIT en cours</th>
+                <th scope="row" class="text-right" data-toggle="tooltip on top" title="Référence individuelle définitive de la réserve">RI Total</th>
+                <th scope="row"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in planteurs %}
+            <tr>
+                <td>{{ p.pacage }}</td>
+                <td>{{ p.nom }}</td>
+                <td>{{ p.prenom }}</td>
+                <td align ="middle" class="text-right">{{ p.ridAnneeEnCours|intcomma }}</td>
+                <td align="middle" class="text-right">{{ p.ritAnneeEnCours|intcomma }}</td>
+                <td align="middle" class="text-right">{{ p.riTotale|intcomma }}</td>
+                <td align="right">
+                     <div class="btn-group">
+                        <a href="{% url 'poyosei:planteurEditer' p.pacage %}" class="btn btn-default" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a href="{% url 'poyosei:planteurFiche' p.pacage %}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                        <a href="" data-civilite = "{{ p.civilite }}" data-nom = "{{ p.nom }}" data-pacage = "{{ p.pacage }}" data-href="{% url 'poyosei:planteurSupprimer' p.pacage %}" data-toggle="modal" data-target = "#confirm-delete" class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                    </div>
+                </td>
+            </tr>
+        	{% endfor %}
+        </tbody>
+    </table>
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1>Suppression du planteur</h1>
+              </div>
+              <div class="modal-body">
+                  <p id="p"></p>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                  <a class="btn btn-danger btn-ok">Supprimer</a>
+              </div>
+          </div>
+      </div>
+    </div>
+</div>
+    <script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        nom = $(e.relatedTarget).data('nom');
+        pacage = $(e.relatedTarget).data('pacage');
+        civilite = $(e.relatedTarget).data('civilite');
+        $("#p").text(civilite + " " + nom +" avec le pacage : "+pacage);
+    });
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });
+    </script>
+    <style type="text/css">
+        .margin-constraint{
+            /*On indique tout simplement une marge*/
+            margin-left: 700px;
+            margin-right: 700px;
+        }
+        
+        .useful-width{
+            /*On règle ensuite la largeur utile puis on centre*/
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        </style>
+
+{% endblock %}

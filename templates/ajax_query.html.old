@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Ajax Query{% endblock %}
+
+{% block javascript %}
+<script>
+function planteur_suggestion()
+{
+var pacage = document.getElementById("id_planteurSearch").value;
+var xhr;
+var csrftoken = Cookies.get('csrftoken');
+//alert(csrftoken)
+ if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+    xhr = new XMLHttpRequest();
+} else if (window.ActiveXObject) { // IE 8 and older
+    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+}
+var data = "csrfmiddlewaretoken=" + csrftoken +"&planteurSearch=" + pacage;
+
+     xhr.open("POST", "http://poyosei.gwada.agri:8000/poyoseip/ajax/planteur/", true);
+     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded", "X-CSRF-Token", csrftoken);
+     xhr.send(data);
+   xhr.onreadystatechange = display_data;
+  function display_data() {
+   if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+       //alert(xhr.responseText);
+       document.getElementById("suggestion").innerHTML = xhr.responseText;
+      } else {
+        alert('There was a problem with the request.');
+      }
+     }
+  }
+}
+</script>
+
+{% endblock %}
+
+
+{% block content %}
+
+<h3 class='error'>Veuillez entrez un pacage valide</h3>
+  <div>
+    <form method="post" action="{% url 'poyosei:searchPlanteur' %}">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Cherchez" />
+      <div id="suggestion"></div>
+    </form>
+  </div>
+
+{% endblock %}

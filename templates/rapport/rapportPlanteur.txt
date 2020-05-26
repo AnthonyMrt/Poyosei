@@ -1,0 +1,4 @@
+{% for a in annee %} {{ a }}{% endfor %}
+{% for f in fields %}{% if f.name != 'relation' and f.name != 'statistique' and f.name != 'id' %}{{ f.name|addslashes}}{% if not forloop.last %};{% endif %}{% endif %}{% endfor %}
+{% for l in ligne %}
+{% for l1 in l %}{% for l2 in l1 %}{{ l2 }}{% if not forloop.last %};{% endif %}{% endfor %}{% endfor %}{% endfor %}

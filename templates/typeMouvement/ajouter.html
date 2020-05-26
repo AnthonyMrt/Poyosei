@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap3 %}
+{% load humanize %}
+
+
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% bootstrap_messages %}
+
+{% block title %}Poyosei|Création d'un mouvement{% endblock %}
+
+{% block javascript %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+{% endblock %}
+
+{% block subtitle %}
+
+<!--{% if mouvements %}
+	<h1 class='text-center'> {{ mouvements|length }} mouvements</h1>
+{% else %}
+	<h1 class='text-center'>Il n'y a actuellement aucun mouvements enregistré</h1>
+{% endif %}-->
+
+{% endblock %}
+{% block content %}
+
+<div class="full-windth" align='middle'>
+    <div class='margin-constraint'>
+        <form action="{% url 'poyosei:AjouterTypeMouvement' %}" method="post" class="form">
+            {% csrf_token %}
+            <table>
+                {% bootstrap_form form %}
+            </table>
+        {% buttons %}
+            <button type="submit" class="btn btn-primary btn-lg">Valider</button>
+        {% endbuttons %}
+        </form>     
+    </div>
+</div>
+<style type="text/css">
+    .margin-constraint{
+    /*On indique tout simplement une marge*/
+    margin-left: 10%;
+    margin-right: 10%;
+    }
+    
+    .useful-width{
+    /*On règle ensuite la largeur utile puis on centre*/
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    
+    
+    *{
+    margin:0;
+    padding:0;
+    }
+    
+    footer{
+    position:relative;
+    bottom:0;
+    left: 0px;
+    }
+    
+    </style>
+{% endblock %}

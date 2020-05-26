@@ -1,0 +1,100 @@
+{% extends 'base/base.html' %} 
+{% load static %} 
+{% load humanize %} 
+{% block title %}Poyosei|Modification d'un planteur
+{% endblock %} 
+{% block javascript %} 
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}" />
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script> {% endblock %} {% block subtitle%}
+<h1>Edition d'une reconstitution de tonnage</h1>
+{% endblock %} 
+{% block content %}
+<div class="full-windth" align='middle'>
+    <div class='margin-constraint'>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class='active'>
+                                <a href="#tab1default" data-toggle="tab">Informations</a>
+                            </li>
+                            <li class="navbar-right">
+                                <a href="{% url 'poyosei:tonnageFiche' instance.pacage instance.annee %}" class="" title="Edition">Visualiser
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default" title="">
+                                <table class="table table-striped">
+                                    <tr title="">
+                                        <th>{{ form.pacage.label_tag }}</th>
+                                        <td>{{ form.pacage }}</td>
+                                        <td>{{ form.pacage.errors }}</td>
+                                        <td><a href="{% url 'poyosei:planteurFiche' instance.pacage  %}" target="_blank">Voir Fiche Planteur</a></td>
+                                    </tr>
+                                    <tr title="">
+                                        <th>{{ form.annee.label_tag }}</th>
+                                        <td>{{ form.annee }}</td>
+                                        <td>{{ form.annee.errors }}</td>
+                                    </tr>
+                                    <tr title="">
+                                        <th>{{ form.reconstitution_tonnage.label_tag }}</th>
+                                        <td>{{ form.reconstitution_tonnage }}</td>
+                                        <td>{{ form.reconstitution_tonnage.errors }}</td>
+                                    </tr>
+                                    <tr title="">
+                                        <th>{{ form.justification.label_tag }}</th>
+                                        <td>{{ form.justification }}</td>
+                                        <td>{{ form.justification.errors }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Valider</button>
+            <a href="{% url 'poyosei:tonnageListe' %}" type="button" class="btn btn-default">Retour</a>    
+        </form>
+    </div>
+</div>
+<style type="text/css">
+    .margin-constraint{
+    /*On indique tout simplement une marge*/
+    margin-left: 30%;
+    margin-right: 30%;
+    }
+    
+    .useful-width{
+    /*On règle ensuite la largeur utile puis on centre*/
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    
+    
+    *{
+    margin:0;
+    padding:0;
+    }
+    
+    footer{
+    position:relative;
+    bottom:0;
+    left: 0px;
+    }
+    
+    </style>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+{% block title %}Poyosei|Fiche campagne{% endblock %}
+{% block javascript %}
+{% endblock %}
+{% block subtitle%}
+{% endblock %}
+{% block content %}
+<div class="container">
+<form method="post" novalidate>
+  {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-heading">
+                                <ul class="nav nav-tabs">
+                                   <li class="active"><a href="#tab1default" data-toggle="tab">Obligatoires</a></li>
+                                    <li><a href="#tab2default" data-toggle="tab">Informations</a></li>
+                                    <!-- <li><a href="#tab5default" data-toggle="tab">Default 5</a></li> -->
+                                </ul>
+                        </div>
+                        <fieldset disabled="disabled">
+                        <div class="panel-body">
+                          <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default" title="{{ form.pacage.help_text }}">
+                              <!-- <fieldset disabled="disabled"> -->
+                                <table class="table table-striped">
+                                    <tr title="{{ form.pacage.help_text }}"><th>{{ form.pacage.label_tag }}</th><td>{{ form.pacage }}</td><td>{{ form.pacage.errors }}</td></tr>
+                                    <tr title="{{ form.annee.help_text }}"><th>{{ form.annee.label_tag }}</th><td>{{ form.annee }}</td><td>{{ form.annee.errors }}</td></tr>
+                                    <tr title="{{ form.rid.help_text }}"><th>{{ form.rid.label_tag }}</th><td>{{ form.rid }}</td><td>{{ form.rid.errors }}</td></tr>
+                                    <tr title="{{ form.rit.help_text }}"><th>{{ form.rit.label_tag }}</th><td>{{ form.rit }}</td><td>{{ form.rit.errors }}</td></tr>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="tab2default">
+                              <table class="table table-striped">
+                                  <tr title="{{ form.commentaire.help_text }}"><th>{{ form.commentaire.label_tag }}</th><td>{{ form.commentaire }}</td><td>{{ form.commentaire.errors }}</td></tr>
+                              </table>
+                            </div>
+                         </div>
+                       </div>
+                </div>
+          </div>
+        </div>
+        <a href="{% url 'poyosei:campagneListe' %}" type="button" class="btn btn-default">Retour</a>
+      </fieldset>
+</form>
+</div>
+{% endblock %}

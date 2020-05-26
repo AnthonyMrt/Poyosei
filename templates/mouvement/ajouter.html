@@ -1,0 +1,138 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap3 %}
+
+
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% bootstrap_messages %}
+
+{% block title %}Poyosei|Ajouter un mouvement{% endblock %}
+
+{% block javascript %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/widgets.css' %}"/>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/calendar.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/admin/DateTimeShortcuts.js' %}"></script>
+<script type="text/javascript" src=" 
+function dynamicdropdown(listindex)
+{
+  // alert(direction.options[direction.selectedIndex].text);
+  switch (listindex)
+  {
+	case 'Transfert de référence individuelle sans foncier' :
+		document.getElementById('id_informations').options[0]=new Option('Direction','Direction');
+		break;
+	case 'Transfert de référence individuelle avec cession partielle de foncier':
+		document.getElementById('id_informations').options[0]=new Options('Test', 'Test');
+  }
+  return true;
+}
+	">
+</script>
+{% endblock %}
+
+
+
+{% block subtitle %}
+
+<!--{% if mouvements %}
+	<h1 class='text-center'> {{ mouvements|length }} mouvements</h1>
+{% else %}
+	<h1 class='text-center'>Il n'y a actuellement aucun mouvements enregistré</h1>
+{% endif %}-->
+
+{% endblock %}
+{% block content %}
+
+
+
+	{% if envoi %} Le mouvement a bien été crée !{% endif %}
+<div class="full-windth" align='middle'>
+  <div class='margin-constraint'>
+		<form action="{% url 'poyosei:mouvementAjouter' %}" method="post" class="form">
+			{% csrf_token %}
+	    	<table>
+		       	{% bootstrap_form form %}
+	    	</table>
+	  {% buttons %}
+		<button type ="submit" class="btn btn-primary btn-lg">Valider</button>
+		{% endbuttons %}
+		</form>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	$('#id_type_mouvement').change(function() {
+		var selected = $(this).val();
+		if(selected == 'Transfert de référence individuelle sans foncier') {
+		$('#id_informations').val('NB: la reserve se voit attribuer 15% de la quantite échanger.');
+		$('#id_taxe').val(15);
+		}
+		else if(selected == 'transfert total d\'une exploitation') {
+		$('#id_informations').val('on valide le mouvements après vérifications(si cession reprise ou changement statut vérifier si fluctuation de -20 % surface sur 3 ans)');
+		$('#id_taxe').val(0);
+		}
+		else if(selected == 'Reprise administrative') {
+		$('#id_informations').val('Vérifiez si le taux de réalisation  de la RI est inférieur à 70%');
+		$('#id_taxe').val(0);
+		}
+		else if(selected == 'Attribution de Reference Individuelle par la reserve') {
+		$('#id_informations').val('NB: on transfert les références individuelle définitives et temporaires');		
+		$('#id_taxe').val(0);
+		}
+		else if(selected == 'Cession volontaire définitive') {
+		$('#id_informations').val('');
+		$('#id_taxe').val(0);
+		}
+		else if(selected == 'Cessation d’activite sans repreneur') {
+		$('#id_informations').val('');
+		$('#id_taxe').val(0);
+		}
+		else if(selected == 'Cession volontaire temporaire') {
+		$('#id_informations').val('on valide le mouvements après vérifications(si cession temporaire plafond de 30 % de la Référence Individuelle de A.) (afficher les RIT de n-1 et n-2)');
+		$('#id_taxe').val(0);
+		}
+		else if(selected == 'Transfert de Référence Individuelle avec cession partielle de foncier') {
+		$('#id_informations').val('Vérifiez si le repreneur à recu des attributions au cours des 3 années précédentes et si la Référence individuelle est supérieur à 300 tonnes et pas plus de 2 transferts déjà effectué au cours de la campagne en cours.');
+		$('#id_taxe').val(0);
+		}
+	});
+});		  
+</script>
+<style type="text/css">
+.margin-constraint{
+/*On indique tout simplement une marge*/
+margin-left: 30%;
+margin-right: 30%;
+}
+
+.useful-width{
+/*On règle ensuite la largeur utile puis on centre*/
+max-width: 30%;
+margin-left: auto;
+margin-right: auto;
+}
+
+
+*{
+margin:0;
+padding:0;
+}
+
+footer{
+position:relative;
+bottom:0;
+left: 0px;
+}
+
+</style>
+{% endblock %}

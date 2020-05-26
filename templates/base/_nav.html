@@ -1,0 +1,52 @@
+{% load static %}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'poyosei:index' %}">Poyosei</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav" id="nav">
+          <li {% if active_tab == 'planteur'  %} class="active" {% endif %}><a href="{% url 'poyosei:planteurListe' %}" type="button" class="btn btn-dark">Planteur</a></li>
+          <li {% if active_tab == 'mouvement'  %} class="active" {% endif %}><a href="{% url 'poyosei:mouvementListe' %}">Mouvement</a></li>
+          <li {% if active_tab ==  "campagne" %} class="active"{% endif %}><a href="{% url 'poyosei:campagneListe' %}">Campagne</a></li>
+          <li {% if active_tab ==  "statistique" %} class="active"{% endif %}><a href="{% url 'poyosei:statsListe' %}">Statistiques</a></li>
+          <li {% if active_tab == "prodCommerciale" %} class="active"{% endif %}><a href="{% url 'poyosei:prodCommercialeListe' %}">Production Commerciale</a></li>
+          <li {% if active_tab == "tonnage" %} class="active"{% endif %}><a href="{% url 'poyosei:tonnageListe' %}">Rescontitution tonnage</a></li>
+          <li {% if active_tab == "rapport" %} class="active"{% endif %}><a href="{% url 'poyosei:rapport' %}">Rapport</a></li>
+          <li {% if active_tab == "opération" %} class="active"{% endif %}><a href="{% url 'poyosei:operation' %}">Opération</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {% if active_tab == "planteur" %}
+            <li {% if active_tabP == 'ajout' %} class="active" {% endif %}><a href="{% url 'poyosei:planteurAjouter' %}" type="button" data-toggle='tooltip' title='Créer un nouveau planteur' class="btn btn-dark">Ajouter un planteur</a></li>
+            <li {% if active_tab == "export" %} class="active" {% endif %}><a href="{% url 'poyosei:planteurExport' %}" type="button" data-toggle='tooltip' title='Exporter le tableau (CSV) des planteurs'>Export</a></li>
+            <li><a href="" type="button" data-toggle='tooltip' title='Importer un fichier CSV'>Import</a>
+            <li><a href="{% url 'poyosei:planteurHistorique' %}" type="button" data-toggle='tooltip' title='Consulter historique'>Historique</a>
+          {% elif active_tab == "mouvement" %}
+          <li {% if active_tabM == 'ajout' %} class="active" {% endif %}><a href="{% url 'poyosei:mouvementAjouter' %}" type="button" data-toggle='tooltip' title='créer une nouvelle transaction entre planteur' class="btn btn-dark">Créer un mouvement</a></li>
+          <li><a href="{% url 'poyosei:AjouterTypeMouvement' %}" type="button" data-toggle='tooltip' title='Ajouter un nouveau mouvement' class="btn btn-dark">Ajouter un type de mouvement</a></li>
+          <li {% if active_tab == "export" %} class="active" {% endif %}><a href="{% url 'poyosei:mouvementExport' %}" type="button" data-toggle='tooltip' title='Exporter le tableau (CSV) des mouvement'>Export</a></li>
+          <li><a href="{% url 'poyosei:mouvementHistorique' %}" type="button" data-toggle='tooltip' title='Consulter historique'>Historique</a>
+          {% elif active_tab == 'campagne' %}
+            <!--/<li {% if active_tabC == 'ajout' %} class="active" {% endif %}><a href="" type="button" data-toggle='tooltip' title='importer une campagne' class="btn btn-dark">Import</a></li>-->
+            <li {% if active_tab == "export" %} class="active" {% endif %}><a href="" type="button" data-toggle='tooltip' title='exporter une campagne'>Export</a></li>
+          {% elif active_tab == 'statistique' %}
+            <li {% if active_tabS == 'ajout' %} class="active" {% endif %}><a href="{% url 'poyosei:statsAjouter' %}" type="button" class="btn btn-dark">Ajout</a></li>
+            <li {% if active_tab == "export" %} class="active" {% endif %}><a href="">Export</a></li>
+          {% elif active_tab == 'prodCommerciale' %}
+            <li {% if active_tabS == 'ajout' %} class="active" {% endif %}><a href="{% url 'poyosei:prodCommercialeAjouter' %}" type="button" class="btn btn-dark">Ajout</a></li>
+            <li {% if active_tab == "export" %} class="active" {% endif %}><a href="">Export</a></li>          
+          {% elif active_tab == 'tonnage' %}
+            <li {% if active_tabS == 'ajout' %} class="active" {% endif %}><a href="{% url 'poyosei:tonnageAjouter' %}" type="button" class="btn btn-dark">Ajout</a></li>
+            <li {% if active_tab == "export" %} class="active" {% endif %}><a href="">Export</a></li>          
+          {% elif active_tab == 'rapport' %}
+            <!--/<li {% if active_tabR == 'ajout' %} class="active" {% endif %}><a href="" type="button" class="btn btn-dark">Ajout</a></li>-->
+            <!--/<li {% if active_tab == "export" %} class="active" {% endif %}><a href="">Export</a></li>-->
+          {% elif active_tab == 'Operation' %}
+            <li {% if active_tabO == 'ajout' %} class="active" {% endif %}><a href="" type="button" class="btn btn-dark">Ajout</a></li>
+            <li {% if active_tab == "export" %} class="active" {% endif %}><a href="">Export</a></li>
+          {% endif %}
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
